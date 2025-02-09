@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Log: Viral Outbreak</title>
+    <style>
+        /* === Global Styles === */
+        body {
+            font-family: 'Courier New', monospace;
+            background: #1a1a1a;
+            color: #e0e0e0;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #ff5555;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .log-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #2a2a2a;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .log-entry {
+            margin-bottom: 20px;
+        }
+
+        .log-entry p {
+            margin: 10px 0;
+        }
+
+        .highlight {
+            color: #00ff88;
+            font-weight: bold;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        /* === Interactive Elements === */
+        .reveal-button {
+            background: #ff5555;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .reveal-button:hover {
+            opacity: 0.8;
+        }
+
+        .hidden-info {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background: #333;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Research Log: Viral Outbreak</h1>
+    <div class="log-container">
+        <!-- Log Entry -->
+        <div class="log-entry">
+            <p>Alice sat in front of the array of monitors, her eyes bloodshot from sleepless nights. The data was grim. The virus was mutating faster than they could keep up. No matter what treatments they tested, it adapted. The world outside was a shell of what it once was, cities abandoned, governments silent, and the few remaining survivors scattered in hiding.</p>
+        </div>
+
+        <!-- Ben's Entry -->
+        <div class="log-entry">
+            <p><span class="highlight">Ben</span> entered the room, a heavy sigh escaping him as he glanced at the monitors. "Nothing. We’re running out of time, Alice. People are dying by the second."</p>
+            <button class="reveal-button" onclick="revealInfo('ben-info')">Reveal Ben's Details</button>
+            <div id="ben-info" class="hidden-info">
+                <p><span class="highlight">Ben</span> is either <span class="highlight">30 or 45 years old</span>, and his clearance level is not <span class="highlight">Alpha</span> or <span class="highlight">Delta</span>.</p>
+            </div>
+        </div>
+
+        <!-- Clara's Entry -->
+        <div class="log-entry">
+            <p><span class="highlight">Clara</span> joined them, her hands trembling slightly as she held a tablet. "The situation outside is worse than ever. It’s spreading faster. We’ve lost contact with all the other research teams. We’re the last ones left."</p>
+            <button class="reveal-button" onclick="revealInfo('clara-info')">Reveal Clara's Details</button>
+            <div id="clara-info" class="hidden-info">
+                <p><span class="highlight">Clara</span>’s clearance level is <span class="highlight">Gamma</span>, and she does not specialize in <span class="highlight">Mathematics</span>.</p>
+            </div>
+        </div>
+
+        <!-- David's Entry -->
+        <div class="log-entry">
+            <p><span class="highlight">David</span>, who had been staring out the small, grimy window into the dark, empty world outside, spoke softly, almost to himself. "How much longer can we keep fighting this? We're out of options."</p>
+            <button class="reveal-button" onclick="revealInfo('david-info')">Reveal David's Details</button>
+            <div id="david-info" class="hidden-info">
+                <p><span class="highlight">David</span>’s clearance level is not <span class="highlight">Delta</span> or <span class="highlight">Gamma</span>.</p>
+            </div>
+        </div>
+
+        <!-- Additional Clues -->
+        <div class="log-entry">
+            <p>The person who specializes in <span class="highlight">Physics</span> is <span class="highlight">35 years old</span>.</p>
+            <p>The person who is <span class="highlight">40 years old</span> specializes in <span class="highlight">Chemistry</span> and likes <span class="highlight">Beta</span>.</p>
+            <p>The person who specializes in <span class="highlight">Biology</span> is <span class="highlight">30 years old</span> and has <span class="highlight">Gamma</span> clearance.</p>
+            <p><span class="highlight">Alice</span> is older than the person who specializes in <span class="highlight">Physics</span>, but younger than the person who specializes in <span class="highlight">Mathematics</span>.</p>
+            <p>The person who has clearance <span class="highlight">Delta</span> specializes in <span class="highlight">Mathematics</span>.</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Research Log - Last Updated: [REDACTED]</p>
+    </div>
+
+    <script>
+        // Function to reveal hidden info
+        function revealInfo(id) {
+            const element = document.getElementById(id);
+            if (element.style.display === "none" || element.style.display === "") {
+                element.style.display = "block";
+            } else {
+                element.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
