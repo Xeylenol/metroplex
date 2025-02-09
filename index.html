@@ -4,188 +4,417 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>METROPLEX Colonial Administration</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-    <script src="https://unpkg.com/lucide@latest" defer></script>
     <style>
-        /* Reuse Genesis Labs CSS with minor modifications */
-        body { background: #0a192f; color: #ccd6f6; }
-        .header { background: #002240; }
-        .nav-link { color: #7fffd4; }
-        .card { background: #001a33; }
-        .alert { background: #330000; border-left: 4px solid #ff5555; padding: 1rem; }
+        /* === Global Styles === */
+        :root {
+            --gov-blue: #001f3f;
+            --alert-red: #580000;
+            --cipher-green: #00ff88;
+            --gold-accent: #ffd700;
+            --text-light: #f0f0f0;
+            --text-dark: #333;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--gov-blue);
+            color: var(--text-light);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1, h2, h3 {
+            color: var(--gold-accent);
+        }
+
+        a {
+            color: var(--cipher-green);
+            text-decoration: none;
+        }
+
+        a:hover {
+            opacity: 0.8;
+        }
+
+        /* === Header === */
+        .header {
+            background: #002b4d;
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--gold-accent);
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-link {
+            color: var(--text-light);
+            font-weight: 500;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--cipher-green);
+        }
+
+        /* === Main Content === */
+        .main-content {
+            margin-top: 80px;
+            padding: 2rem;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            background: linear-gradient(45deg, #001a33, #002b4d);
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+        }
+
+        /* === Sections === */
+        .section {
+            margin-bottom: 2rem;
+        }
+
+        .section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--gold-accent);
+            display: inline-block;
+        }
+
+        .card {
+            background: #001a33;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            color: var(--gold-accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .card p {
+            color: var(--text-light);
+        }
+
+        /* === Alerts & Notices === */
+        .alert-box {
+            background: var(--alert-red);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            cursor: pointer;
+        }
+
+        .alert-box h3 {
+            color: #ff5555;
+            margin-bottom: 0.5rem;
+        }
+
+        .alert-box p {
+            color: #ffaaaa;
+        }
+
+        .public-notice {
+            background: #002b4d;
+            padding: 0.8rem;
+            border-radius: 4px;
+            margin-top: 1rem;
+        }
+
+        .public-notice p {
+            color: var(--text-light);
+            font-style: italic;
+        }
+
+        /* === Hidden Data === */
+        .cipher-text {
+            font-family: monospace;
+            color: var(--cipher-green);
+            cursor: pointer;
+        }
+
+        .hidden-data {
+            display: none;
+            color: var(--cipher-green);
+            margin-top: 1rem;
+        }
+
+        .redacted {
+            background: #222;
+            color: transparent;
+            position: relative;
+        }
+
+        .redacted::before {
+            content: "███";
+            color: #ff5555;
+            position: absolute;
+        }
+
+        .document-container:hover .redacted {
+            color: inherit;
+            background: transparent;
+        }
+
+        /* === Footer === */
+        .footer {
+            background: #002240;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        .footer p {
+            color: var(--text-light);
+        }
+        /* Adjust Scientist Cards to be square */
+        .scientist-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .scientist-card img {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        .card-grid {
+        display: grid;
+        gap: 1.5rem;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+        .card {
+            background: #112240;
+            padding: 1.5rem;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+
+        .scientist-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        /* === Mobile Responsiveness === */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                gap: 1rem;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: #002240cc;
+                backdrop-filter: blur(5px);
+                padding: 1rem;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: block;
+                cursor: pointer;
+                font-size: 1.5rem;
+                color: var(--gold-accent);
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .section h2 {
+                font-size: 1.8rem;
+            }
+        }
     </style>
 </head>
 <body>
     <header class="header">
         <nav class="nav">
-            <div class="menu-toggle"><i data-lucide="menu"></i></div>
-            <img src="gov-logo.png" alt="METROPLEX Seal" class="logo">
+            <div class="logo">METROPLEX ΔDMIN</div>
+            <div class="menu-toggle" onclick="toggleMenu()">☰</div>
             <ul class="nav-menu">
-                <li><a href="#health" class="nav-link">Public Health</a></li>
-                <li><a href="#infra" class="nav-link">Infrastructure</a></li>
-                <li><a href="#mining" class="nav-link">Mining Ops</a></li>
-                <li><a href="#leadership" class="nav-link">Leadership</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#missions" class="nav-link">Missions</a></li>
+                <li><a href="#health" class="nav-link">Health</a></li>
+                <li><a href="#archive" class="nav-link">Archives</a></li>
             </ul>
         </nav>
     </header>
 
     <main class="main-content">
+        <!-- Hero Section -->
         <section class="hero">
-            <h1>METROPLEX COLONIAL GOVERNMENT</h1>
-            <p class="mission-stmt">███████████ ███████ Mining Colony Since 2165</p>
+            <h1>METROPLEX COLONIAL ADMINISTRATION</h1>
+            <p>Governance for the ██████████ ████ Mining Colony (PCMC-9)</p>
         </section>
 
-        <!-- Health Warning -->
-        <section class="section">
-            <div class="alert">
-                <h3>⚠️ PUBLIC HEALTH NOTICE</h3>
-                <p>All residents must receive VP-12 boosters by 2189-12-31<br>
-                <em>Note: The recent mineral dust advisory (MDA-████-███) is unrelated to vaccination requirements</em></p>
-            </div>
-        </section>
-
-        <!-- Government Sections -->
-        <section class="section" id="city-hall">
-            <h2>🏛️ City Hall</h2>
+        <!-- About Section -->
+        <section class="section" id="about">
+            <h2>About METROPLEX</h2>
             <div class="card">
-                <h3>Councilwoman Emma Chen</h3>
-                <p>Responsibility: ██████████ █████████<br>
-                Clearance: [█████████]<br>
-                Current Project: Voidstone Safety Curriculum</p>
-            </div>
-            <div class="public-notice">
-                <p>📢 Water rationing in Sector 5-B extended through Q3 </p>
-                <p>📢 Reminder: Report all unauthorized mineral contact to Sector Security</p>
+                <h3>Δ Founding Principles</h3>
+                <p>Established in ███████ under the <em>United Earth Colonial Act</em>, METROPLEX oversees the equitable distribution of resources, civil order, and interstellar expansion through responsible Voidstone utilization.</p>
+                <p class="cipher-text" onclick="revealCipher(this)">[ENCRYPTED] Psychohistorical Division: 97.3% collapse probability within 50 years.</p>
             </div>
         </section>
 
-        <section class="section" id="state-capitol">
-            <h2>🏢 State Capitol</h2>
+        <!-- Missions Section -->
+        <section class="section" id="missions">
+            <h2>Our Missions</h2>
             <div class="card">
-                <h3>Governor Sarah Nakamura</h3>
-                <p>Responsibility: Colonial Economy<br>
-                Clearance: Top Secret<br>
-                Current Project: VS-Ω Export Quotas</p>
+                <h3>Public Health Security</h3>
+                <p>VP-12 Vaccine Distribution (87% coverage achieved)(Amphiteather).</p>
+                <p class="public-notice">ℹ️ Symptoms unrelated to Voidstone exposure.</p>
             </div>
-            <div class="public-notice">
-                <p>📢 New curfew hours: 2200-0500 local time</p>
+            <div class="card">
+                <h3>Infrastructure Continuity</h3>
+                <p>Trans-sector maglev network (Phase III delayed).</p>
+                <p class="public-notice">ℹ️ Unauthorized reactor access violates Penal Code 45-X.</p>
+            </div>
+            <div class="card">
+                <h3>Voidstone Infrastructure</h3>
+                <p>Mining and ultra-purifiaction of Voidstone.</p>
+                <p class="public-notice">ℹ️ Smuggling of Void stone is now penalized by Capital punishment.</p>
             </div>
         </section>
-
-        <section class="section" id="regional-office">
-            <h2>🏭 Regional Office</h2>
-            <div class="card">
-                <h3>Senator Tom Reynolds</h3>
-                <p>Responsibility: Transport Networks<br>
-                Clearance: Confidential<br>
-                Current Project: Rail Expansion Phase III</p>
-            </div>
-            <div class="public-notice">
-                <p>📢 Shuttle service to Mine Sector 7 suspended</p>
-            </div>
-        </section>
-
-        <section class="section" id="gov-building">
-            <h2>⚖️ Government Building</h2>
-            <div class="card">
-                <h3>Mayor John Kowalski</h3>
-                <p>Responsibility: Public Health<br>
-                Clearance: Unclassified<br>
-                Current Project: VP-12 Distribution</p>
-            </div>
-            <div class="public-notice">
-                <p>📢 Mandatory air filter replacements every 90 days</p>
-            </div>
-        </section>
-
-        <!-- Mining Operations -->
-        <section class="section" id="mining">
-            <h2>⛏️ Voidstone Mining</h2>
-            <div class="card">
-                <p>METROPLEX oversees all VS-Ω (Voidstone) extraction under<br>
-                <em>Colonial Resource Act 2172</em><br>
-                Safety Reminder: Report unauthorized mineral contact to Sector Security</p>
-                <div class="encrypted">
-                    <p>[ENCRYPTED] Incident Report 2189-45: "Unusual seismic activity<br> 
-                    in Mine Shaft 9 correlates with VS-Ω resonance patterns"</p>
+        <!-- Leadership Section -->
+        <section class="section" id="team">
+            <h2>≡ METROPLEX Leadership</h2>
+            <div class="card-grid">
+                <div class="card scientist-card">
+                    <img src="assets/images/default.png" alt="Dr. Elara Voss">
+                    <h3>Council Woman Emmma</h3>
+                    <p>████ - ██████</p>
+                    <p class="status">CLEARANCE: ██████</p>
+                </div>
+                <div class="card scientist-card">
+                    <img src="assets/images/default.png" alt="Dr. Marcus Rourke">
+                    <h3>Mayor Jhon</h3>
+                    <p>███████ ████</p>
+                    <p class="status">CLEARANCE: ███████████</p>
+                </div>
+                <div class="card scientist-card">
+                    <img src="assets/images/default.png" alt="Dr. Marcus Rourke">
+                    <h3>Govener Sarah</h3>
+                    <p>█████ ██ ████</p>
+                    <p class="status">CLEARANCE: ███████</p>
+                </div>
+                <div class="card scientist-card">
+                    <img src="assets/images/default.png" alt="Dr. Marcus Rourke">
+                    <h3>Senetor TOM</h3>
+                    <p>█████████</p>
+                    <p class="status">CLEARANCE: █████</p>
                 </div>
             </div>
         </section>
-        <section class="section" id="articles">
-            <h2>📚 Articles & Publications</h2>
-            <div class="article-grid"></div>
+        <!-- Archive Section -->
+        <section class="section" id="archive">
+            <h2>Archives</h2>
+            <div class="card">
+                <h3>Restricted Documents</h3>
+                <div class="document-container">
+                    <div class="document redacted">
+                        <h4>ARCHIVED COMMUNIQUE</h4>
+                        <p>"...psychohistorical projections indicate <span class="redact">█████ ██</span> probability at 89.7%..."</p>
+                        <p> "Virus log █████ ██ ████ <a href="log_1.html">Zeta X</a>"</p>
+                        <p>"...implement <span class="redact">FOUNDATION PROTOCOLS</span> per contingency plan Zeta..."</p>
+                        <p>As the colony grapples with the mysteries of Voidstone and the Scourge, our researchers have turned to historical archives for insights. The<span class="redact"><a href="books/Yourbookshelf-625-HYPERION.pdf ">Hyperion Cantos</a> provides a</span> chilling parallel to our current crisis, with its tales of ancient artifacts and humanity's struggle against incomprehensible forces. Similarly,<span class="redact">the <a href="books/Asimov - Foundation.pdf">Foundation Protocols</a> offer a framework for </span> predicting societal collapse—though our psychohistorical models suggest a far darker outcome. Recent discoveries<span class="redact"> in the <a href="books/22672366-Herbig-Haro - Harry Turtledove_20254.pdf">Herbig-Haro Nebula</a> have raised questions </span>about the origins of Voidstone, while the <span class="redact"> controversial <a href="books/Turtledove_RoadNotTaken.pdf">Road Not Taken</a> hypothesis challenges </span> our understanding of interstellar expansion. These works remind us that our survival may depend on learning from the past—and preparing for the unknown.</p>
+                    </div>
+                </div>
+            </div>
         </section>
     </main>
 
     <footer class="footer">
-        <p>Secure Comms Channel: METROPLEX-GOV-Ω9<br>
-        Emergency Beacon Frequency: 147.570 MHz</p>
+        <p>METROPLEX Colonial Charter §45.12.7</p>
+        <p><em>"All civilizational collapses are fundamentally nonlinear" - Principia Administrativa</em></p>
+        <p>Head offices: 22°57'48.2"N 88°31'28.3"E</p>
     </footer>
 
     <script>
-        // Same mobile menu logic as Genesis site
-        document.addEventListener('DOMContentLoaded', () => {
-            const menuToggle = document.querySelector('.menu-toggle');
+        // Toggle Mobile Menu
+        function toggleMenu() {
             const navMenu = document.querySelector('.nav-menu');
-            menuToggle.addEventListener('click', () => navMenu.classList.toggle('active'));
-        });
-        document.addEventListener('DOMContentLoaded', function () {
-        // Mobile menu toggle
-        const menuToggle = document.querySelector('.menu-toggle');
-        const navMenu = document.querySelector('.nav-menu');
-
-        menuToggle.addEventListener('click', () => {
             navMenu.classList.toggle('active');
-        });
+        }
 
-        // Smooth scroll for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+        // Reveal Encrypted Text
+        function revealCipher(element) {
+            if (element.textContent.includes("ENCRYPTED")) {
+                element.textContent = "[DECRYPTED] Psychohistorical Division: 97.3% collapse probability within 50 years.";
+                element.style.color = "#ff5555";
+            }
+        }
+
+        // Redacted Text Hover Effect
+        document.querySelectorAll('.redacted').forEach(redact => {
+            redact.addEventListener('mouseover', () => {
+                redact.style.color = 'inherit';
+                redact.style.background = 'transparent';
+            });
+            redact.addEventListener('mouseout', () => {
+                redact.style.color = 'transparent';
+                redact.style.background = '#222';
             });
         });
-
-        // Dynamically add articles
-        const articlesSection = document.getElementById('articles');
-        const articleGrid = document.createElement('div');
-        articleGrid.className = 'article-grid';
-        articlesSection.appendChild(articleGrid);
-
-        const articles = [
-            {
-                title: "Voidstone Mining Safety Protocols",
-                meta: "Published in Colonial Mining Journal",
-                reference: "MC-2189-001",
-                link: "#"
-            },
-            {
-                title: "Public Health in Space Colonies",
-                meta: "Published in Interstellar Health Review",
-                reference: "PH-2189-002",
-                link: "#"
-            },
-            {
-                title: "Infrastructure Challenges in Proxima Centauri",
-                meta: "Published in Galactic Engineering Quarterly",
-                reference: "IE-2189-003",
-                link: "#"
-            }
-        ];
-
-        articles.forEach(article => {
-            const articleCard = document.createElement('div');
-            articleCard.className = 'article-card';
-            articleCard.innerHTML = `
-                <h3>${article.title}</h3>
-                <p>${article.meta}</p>
-                <p>Reference: ${article.reference}</p>
-            `;
-            articleGrid.appendChild(articleCard);
-        });
-    });
     </script>
 </body>
 </html>
